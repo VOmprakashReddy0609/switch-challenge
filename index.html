@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Switch Challenge — Symbol Sequencing</title>
+<link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<!-- ── Start Screen ── -->
+<div id="start-overlay">
+  <div id="start-box">
+
+    <div id="start-header">
+      <div id="start-logo-badge">SCT</div>
+      <div id="start-title">Switch Challenge Trainer</div>
+    </div>
+
+    <div id="start-divider"></div>
+
+    <div id="start-subtitle">
+      Symbol Sequencing Assessment &mdash; Read the rules carefully before you begin.
+    </div>
+
+    <div id="start-rules">
+      <div id="start-rules-label">Rules</div>
+
+      <div class="start-rule-row">
+        <div class="rule-num">1</div>
+        <div class="rule-text">A <strong>source sequence</strong> of symbols is shown at the top.</div>
+      </div>
+      <div class="start-rule-row">
+        <div class="rule-num">2</div>
+        <div class="rule-text">A <strong>target sequence</strong> is shown at the bottom — your goal state.</div>
+      </div>
+      <div class="start-rule-row">
+        <div class="rule-num">3</div>
+        <div class="rule-text">Each <strong>operator row</strong> rearranges the sequence. Select one operator per row.</div>
+      </div>
+      <div class="start-rule-row">
+        <div class="rule-num">4</div>
+        <div class="rule-text">Applying your chosen operators in order must <strong>transform source into target</strong>.</div>
+      </div>
+      <div class="start-rule-row">
+        <div class="rule-num">5</div>
+        <div class="rule-text">Correct answer <strong>+1 point</strong>. Difficulty increases as your score climbs.</div>
+      </div>
+    </div>
+
+    <div id="start-hint">
+      <span>💡</span>
+      <span>Trace the position of each symbol step-by-step through the operators to find the correct path.</span>
+    </div>
+
+    <button id="start-btn" onclick="beginAssessment()">&#9654; Start Assessment</button>
+
+  </div>
+</div>
+
+<!-- ── Exam Header ── -->
+<div id="exam-header">
+  <div id="exam-branding">
+    <div id="exam-logo">SCT</div>
+    <div id="exam-name">Switch Challenge Trainer</div>
+  </div>
+  
+</div>
+
+<!-- ── Main Layout ── -->
+<div id="wrapper">
+
+  <!-- Left: Question Panel -->
+  <div id="question-panel">
+
+    <div id="question-header">
+      <div id="qnum-badge">Q <span id="q-number">1</span></div>
+      <div id="question-title">Select the Correct Operators</div>
+    </div>
+
+    <div id="question-text">
+      Apply one operator from <strong>each row</strong> in sequence to transform the
+      <span class="hl">SOURCE</span> into the <span class="hl">TARGET</span> arrangement shown below.
+    </div>
+
+    <!-- Status Strip -->
+    <div id="status-strip">
+      <div class="status-item">
+        <span class="status-label">Score</span>
+        <span class="status-val" id="score">0</span>
+      </div>
+      <div class="status-divider"></div>
+      <div class="status-item">
+        <span class="status-label">Correct</span>
+        <span class="status-val green" id="correct">0</span>
+      </div>
+      <div class="status-divider"></div>
+      <div class="status-item">
+        <span class="status-label">Wrong</span>
+        <span class="status-val red" id="wrong">0</span>
+      </div>
+      <div class="status-divider"></div>
+      <div class="status-item">
+        <span class="status-label">Attempted</span>
+        <span class="status-val" id="attempted">0</span>
+      </div>
+    </div>
+
+    <!-- Puzzle Area -->
+    <div id="puzzle-area">
+
+      <!-- Source Pattern -->
+      <div class="pattern-section">
+        <div class="symbol-row" id="topPattern"></div>
+      </div>
+
+      <!-- Transform Section -->
+      <div id="transform-area">
+        <div id="operatorRows"></div>
+      </div>
+
+      <!-- Target Pattern -->
+      <div class="pattern-section" style="margin-bottom: 20px;">
+        <div class="symbol-row" id="bottomPattern"></div>
+      </div>
+
+    </div>
+
+    <!-- Feedback / Hint Bar -->
+    <div id="hint-bar">
+      <span class="feedback-icon">💡</span>
+      <span id="hint-text">Select one operator from each row. Your selections are applied in order from top to bottom.</span>
+    </div>
+
+  </div>
+
+  <!-- Right: Side Panel -->
+  <div id="side-panel">
+
+    <div id="timer-card">
+      <div id="timer-label">TIME REMAINING</div>
+      <div id="timer-display">
+        <span id="timer-min">05</span><span id="timer-colon">:</span><span id="timer-sec">00</span>
+      </div>
+      <div id="timer-bar-bg">
+        <div id="timer-bar-fill"></div>
+      </div>
+    </div>
+
+    <div id="progress-card">
+      <div class="side-card-title">SESSION PROGRESS</div>
+      <div id="progress-bar-bg">
+        <div id="progress-bar-fill"></div>
+      </div>
+      <div id="progress-label">
+        <span id="correct-count">0</span> correct of <span id="attempted-count">0</span>
+      </div>
+    </div>
+
+    <div id="level-card">
+      <div class="side-card-title">DIFFICULTY</div>
+      <div id="level-display"><span id="level-num">1</span></div>
+      <div id="level-bar-bg"><div id="level-bar-fill"></div></div>
+    </div>
+
+    <div id="instructions-card">
+      <div class="side-card-title">HOW TO SOLVE</div>
+      <ol id="how-to">
+        <li>Read the <strong>source</strong> symbols top-left to right.</li>
+        <li>Each operator is a <strong>position map</strong> — digit N means "take symbol at position N".</li>
+        <li>Pick one operator per row, applied top to bottom.</li>
+        <li>Your chain must produce the <strong>target</strong> sequence.</li>
+        <li>Trace one symbol at a time to verify.</li>
+      </ol>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ── End Screen Modal ── -->
+<div id="modal-overlay" class="hidden">
+  <div id="modal-box">
+    <div id="modal-header">
+      <div id="modal-logo">SCT</div>
+      <div id="modal-title">Assessment Complete</div>
+    </div>
+    <div id="modal-divider"></div>
+    <div id="result-grid">
+      <div class="result-row">
+        <span class="result-label">Final Score</span>
+        <span class="result-val accent" id="res-score">0</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Difficulty Reached</span>
+        <span class="result-val" id="res-level">1</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Total Attempted</span>
+        <span class="result-val" id="res-attempts">0</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Correct Answers</span>
+        <span class="result-val green" id="res-correct">0</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Wrong Answers</span>
+        <span class="result-val red" id="res-wrong">0</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Accuracy</span>
+        <span class="result-val" id="res-accuracy">—</span>
+      </div>
+    </div>
+    <div id="modal-divider2"></div>
+    <div id="accuracy-wrap">
+      <div id="acc-label-row"><span>Accuracy</span><span id="acc-pct">0%</span></div>
+      <div id="acc-bar-bg"><div id="acc-bar-fill"></div></div>
+    </div>
+    <button id="restart-btn" onclick="location.reload()">&#8634; Restart Assessment</button>
+  </div>
+</div>
+
+<script src="js/puzzleGenerator.js"></script>
+<script src="js/uiRenderer.js"></script>
+<script src="js/game.js"></script>
+
+</body>
+</html>
