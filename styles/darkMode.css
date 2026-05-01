@@ -1,0 +1,209 @@
+/* ── Dark Mode — Switch Challenge ── */
+[data-theme="dark"] {
+  --bg:         #0b1220;
+  --white:      #111827;
+  --text:       #e5e7eb;
+  --muted:      #9ca3af;
+  --border:     #1f2937;
+  --blue:       #3b82f6;
+  --blue-dark:  #1e40af;
+  --blue-light: #0f172a;
+  --blue-mid:   #1f2a44;
+  --green:      #22c55e;
+  --green-bg:   #052e1a;
+  --red:        #ef4444;
+  --red-bg:     #3b0a0a;
+  --orange:     #f97316;
+  --orange-bg:  #3a1a05;
+}
+
+[data-theme="dark"] body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ── Panels & Cards ── */
+[data-theme="dark"] #question-panel,
+[data-theme="dark"] #timer-card,
+[data-theme="dark"] #progress-card,
+[data-theme="dark"] #level-card,
+[data-theme="dark"] #instructions-card,
+[data-theme="dark"] #modal-box,
+[data-theme="dark"] #start-box {
+  background: var(--white);
+  border-color: var(--border);
+}
+
+/* ── Exam Header ── */
+[data-theme="dark"] #exam-header {
+  background: #020617;
+  border-bottom-color: var(--blue);
+}
+
+/* ── Question Text strip ── */
+[data-theme="dark"] #question-text {
+  background: #020617;
+  color: #cbd5f5;
+  border-bottom-color: var(--border);
+}
+
+/* ── Status strip ── */
+[data-theme="dark"] #status-strip {
+  background: #020617;
+  border-bottom-color: var(--border);
+}
+
+/* ── Puzzle area ── */
+[data-theme="dark"] #puzzle-area,
+[data-theme="dark"] #transform-area {
+  background: var(--white);
+}
+
+/* ── Source symbols ── */
+[data-theme="dark"] .symbol {
+  background: #1f2937;
+  border-color: #374151;
+  color: #93c5fd;
+}
+
+/* ── Target symbols ── */
+[data-theme="dark"] .symbol.target {
+  background: var(--orange-bg);
+  border-color: #7a4510;
+  color: var(--orange);
+}
+
+/* ── Operators ── */
+[data-theme="dark"] .operator {
+  background: #111827;
+  border-color: #374151;
+  color: var(--text);
+}
+
+[data-theme="dark"] .operator:hover {
+  background: #1e293b;
+  border-color: var(--blue);
+}
+
+[data-theme="dark"] .operator.selected {
+  background: #0f172a;
+  border-color: var(--blue);
+  color: #93c5fd;
+  box-shadow: inset 0 0 0 1px var(--blue);
+}
+
+/* ── Hint / Feedback Bar ── */
+[data-theme="dark"] #hint-bar {
+  background: #1a1205;
+  border-top-color: #3a2a05;
+  color: #facc15;
+}
+
+[data-theme="dark"] #hint-bar.correct {
+  background: var(--green-bg);
+  border-top-color: #14532d;
+  color: var(--green);
+}
+
+[data-theme="dark"] #hint-bar.wrong {
+  background: var(--red-bg);
+  border-top-color: #7f1d1d;
+  color: var(--red);
+}
+
+/* ── Timer & Progress bars ── */
+[data-theme="dark"] #timer-bar-bg,
+[data-theme="dark"] #progress-bar-bg,
+[data-theme="dark"] #level-bar-bg,
+[data-theme="dark"] #acc-bar-bg {
+  background: #020617;
+  border-color: var(--border);
+}
+
+/* ── Modal ── */
+[data-theme="dark"] #modal-header {
+  background: #020617;
+}
+
+[data-theme="dark"] #modal-divider,
+[data-theme="dark"] #modal-divider2 {
+  background: var(--border);
+}
+
+[data-theme="dark"] .result-row {
+  border-bottom-color: #1f2937;
+}
+
+/* ── Start Screen ── */
+[data-theme="dark"] #start-box {
+  background: #1e2a40;
+}
+
+[data-theme="dark"] #start-divider {
+  background: #2e3f5c;
+}
+
+[data-theme="dark"] #start-subtitle {
+  background: #162236;
+  border-color: #2a3f60;
+  color: #a8c0e0;
+}
+
+[data-theme="dark"] #start-rules-label {
+  color: #8a9ab8;
+}
+
+[data-theme="dark"] .start-rule-row {
+  border-color: #2a3a55;
+  color: #d0dff5;
+}
+
+[data-theme="dark"] .rule-text strong {
+  color: #5fa0e8;
+}
+
+[data-theme="dark"] #start-hint {
+  background: #2a2010;
+  border-color: #5a4010;
+  color: #c8a84a;
+}
+
+/* ── How-to list ── */
+[data-theme="dark"] #how-to {
+  color: #9ca3af;
+}
+
+/* ── Scrollbar ── */
+[data-theme="dark"] * {
+  scrollbar-color: #334155 #020617;
+}
+
+/* ── Floating theme toggle button ── */
+#theme-toggle {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: #1e293b;
+  color: #facc15;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+  transition: transform 0.15s ease, background 0.2s;
+}
+
+#theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+[data-theme="dark"] #theme-toggle {
+  background: #facc15;
+  color: #020617;
+}

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Switch Challenge — Symbol Sequencing</title>
 <link rel="stylesheet" href="styles/style.css">
+<link rel="stylesheet" href="styles/darkMode.css">
 </head>
 <body>
 
@@ -12,10 +13,12 @@
 <div id="start-overlay">
   <div id="start-box">
 
-    <div id="start-header">
-      <div id="start-logo-badge">SCT</div>
-      <div id="start-title">Switch Challenge Trainer</div>
-    </div>
+  <div id="start-header">
+    <div id="start-logo-badge">SCT</div>
+    <div id="start-title">Switch Challenge Trainer</div>
+    <button id="start-theme-toggle" onclick="toggleTheme()" title="Toggle dark / light mode"
+      style="margin-left:auto;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);border-radius:4px;padding:4px 9px;font-size:16px;cursor:pointer;color:white;">☀️</button>
+  </div>
 
     <div id="start-divider"></div>
 
@@ -224,6 +227,31 @@
 <script src="js/puzzleGenerator.js"></script>
 <script src="js/uiRenderer.js"></script>
 <script src="js/game.js"></script>
+<!-- ADD before </body> -->
+<button id="theme-toggle" onclick="toggleTheme()" title="Toggle dark / light mode">☀️</button>
+
+<script>
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const icon = theme === 'dark' ? '🌙' : '☀️';
+    const t1 = document.getElementById('start-theme-toggle');
+    const t2 = document.getElementById('theme-toggle');
+    if (t1) t1.innerText = icon;
+    if (t2) t2.innerText = icon;
+    localStorage.setItem('theme', theme);
+  }
+
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  }
+
+  /* Apply saved theme on load */
+  (function () {
+    const saved = localStorage.getItem('theme') || 'light';
+    applyTheme(saved);
+  })();
+</script>
 
 </body>
 </html>
