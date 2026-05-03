@@ -56,7 +56,17 @@
       <span>Trace the position of each symbol step-by-step through the operators to find the correct path.</span>
     </div>
 
-    <button id="start-btn" onclick="beginAssessment()">&#9654; Start Assessment</button>
+    <!-- Primary action — label changes to "New Game" when a save exists -->
+    <button id="start-btn" onclick="startGame()">&#9654; Start Assessment</button>
+
+    <!-- Resume button — hidden until a valid in-progress save is detected -->
+    <button id="resume-btn" onclick="resumeSavedGame()" style="display:none;
+      width: calc(100% - 48px); margin: 0 24px 12px; padding: 12px;
+      background: #1a7a3c; color: white; border: none; border-radius: 4px;
+      font-size: 14px; font-weight: 700; font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: 0.5px; cursor: pointer; transition: background 0.15s;">
+      &#9654; Resume Game
+    </button>
 
   </div>
 </div>
@@ -220,17 +230,19 @@
       <div id="acc-label-row"><span>Accuracy</span><span id="acc-pct">0%</span></div>
       <div id="acc-bar-bg"><div id="acc-bar-fill"></div></div>
     </div>
-    <button id="restart-btn" onclick="location.reload()">&#8634; Restart Assessment</button>
+    <button id="restart-btn" onclick="restartGame()">&#8634; Restart Assessment</button>
   </div>
 </div>
 
 <script src="js/puzzleGenerator.js"></script>
 <script src="js/uiRenderer.js"></script>
 <script src="js/game.js"></script>
-<!-- ADD before </body> -->
+
+<!-- Floating theme toggle shown after the overlay closes -->
 <button id="theme-toggle" onclick="toggleTheme()" title="Toggle dark / light mode">☀️</button>
 
 <script>
+  /* ── Theme helpers ── */
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     const icon = theme === 'dark' ? '🌙' : '☀️';
@@ -246,11 +258,48 @@
     applyTheme(current === 'dark' ? 'light' : 'dark');
   }
 
-  /* Apply saved theme on load */
+  /* Apply saved theme immediately on load */
   (function () {
     const saved = localStorage.getItem('theme') || 'light';
     applyTheme(saved);
   })();
+
+  /* ── Game bootstrap ── */
+  window.addEventListener('DOMContentLoaded', () => {
+    // Check for a saved in-progress session and update the start overlay buttons
+    const saved = localStorage.getItem('switchChallenge_state');
+    if (saved) {
+      try {
+        const s = JSON.parse(saved);
+        if (s && s.gameStarted) {
+          // Offer Resume as the primary action
+          const resumeBtn = document.getElementById('resume-btn');
+          const startBtn  = document.getElementById('start-btn');
+          if (resumeBtn) resumeBtn.style.display = 'block';
+          if (startBtn) {
+            startBtn.textContent = '↺ New Game (reset progress)';
+            startBtn.style.background = '#6b7280';
+          }
+        }
+      } catch (e) { /* malformed save — ignore */ }
+    }
+  });
+
+  // Resume the existing saved session.
+  // game.js window.onload has already restored state and the timer
+  // is ready to resume — just dismiss the overlay here.
+  function resumeSavedGame() {
+    document.getElementById('start-overlay').classList.add('hidden');
+    // game.js window.onload already called restoreUI() and set up resumeTimer()
+    // when it detected gameStarted=true, so nothing more to do here.
+  }
+
+  function startGame() {
+    // New game — clear any existing save first, then begin
+    try { localStorage.removeItem('switchChallenge_state'); } catch(e) {}
+    document.getElementById('start-overlay').classList.add('hidden');
+    if (typeof initGame === 'function') initGame();
+  }
 </script>
 
 </body>
