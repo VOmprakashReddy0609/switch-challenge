@@ -6,6 +6,89 @@
 <title>Switch Challenge — Symbol Sequencing</title>
 <link rel="stylesheet" href="styles/style.css">
 <link rel="stylesheet" href="styles/darkMode.css">
+<style>
+  /* ── "Created by" strip inside the start card ── */
+  #start-creator {
+    background: #f4f7fd;
+    border-bottom: 1px solid #dde6f5;
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    color: #4a5c7a;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  #start-creator .creator-name {
+    font-weight: 700;
+    color: #1a56a0;
+    letter-spacing: 0.2px;
+  }
+
+  /* ── Page Footer ── */
+  #page-footer {
+    width: 100%;
+    background: #0d2a52;
+    color: #a0b8d8;
+    text-align: center;
+    padding: 18px 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    line-height: 1.8;
+    letter-spacing: 0.2px;
+    border-top: 3px solid #1a56a0;
+    box-sizing: border-box;
+  }
+  #page-footer .footer-dev-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #5a85b8;
+    margin-bottom: 4px;
+  }
+  #page-footer .footer-dev-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #e0ecff;
+    letter-spacing: 0.4px;
+  }
+  #page-footer .footer-dev-email a {
+    color: #5fa8e8;
+    text-decoration: none;
+    font-size: 12.5px;
+    transition: color 0.15s;
+  }
+  #page-footer .footer-dev-email a:hover {
+    color: #90c8ff;
+    text-decoration: underline;
+  }
+  #page-footer .footer-divider {
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: #2a4a78;
+    margin: 8px auto;
+    vertical-align: middle;
+  }
+  #page-footer .footer-product {
+    font-size: 11.5px;
+    color: #6080a8;
+  }
+
+  /* ── Dark-mode overrides ── */
+  [data-theme="dark"] #start-creator {
+    background: #182535;
+    border-color: #253a56;
+    color: #7a9ac0;
+  }
+  [data-theme="dark"] #start-creator .creator-name {
+    color: #5fa0e8;
+  }
+  [data-theme="dark"] #page-footer {
+    background: #0a1a30;
+    border-color: #1a3a6a;
+  }
+</style>
 </head>
 <body>
 
@@ -13,17 +96,23 @@
 <div id="start-overlay">
   <div id="start-box">
 
-  <div id="start-header">
-    <div id="start-logo-badge">SCT</div>
-    <div id="start-title">Switch Challenge Trainer</div>
-    <button id="start-theme-toggle" onclick="toggleTheme()" title="Toggle dark / light mode"
-      style="margin-left:auto;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);border-radius:4px;padding:4px 9px;font-size:16px;cursor:pointer;color:white;">☀️</button>
-  </div>
+    <div id="start-header">
+      <div id="start-logo-badge">SCT</div>
+      <div id="start-title">Switch Challenge Trainer</div>
+      <button id="start-theme-toggle" onclick="toggleTheme()" title="Toggle dark / light mode"
+        style="margin-left:auto;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);border-radius:4px;padding:4px 9px;font-size:16px;cursor:pointer;color:white;">☀️</button>
+    </div>
 
     <div id="start-divider"></div>
 
     <div id="start-subtitle">
       Symbol Sequencing Assessment &mdash; Read the rules carefully before you begin.
+    </div>
+
+    <!-- ── Developer credit inside the start card ── -->
+    <div id="start-creator">
+      <span>👨‍💻</span>
+      <span>Created by <span class="creator-name">Vanampally Om Prakash Reddy</span></span>
     </div>
 
     <div id="start-rules">
@@ -77,7 +166,6 @@
     <div id="exam-logo">SCT</div>
     <div id="exam-name">Switch Challenge Trainer</div>
   </div>
-  
 </div>
 
 <!-- ── Main Layout ── -->
@@ -266,13 +354,11 @@
 
   /* ── Game bootstrap ── */
   window.addEventListener('DOMContentLoaded', () => {
-    // Check for a saved in-progress session and update the start overlay buttons
     const saved = localStorage.getItem('switchChallenge_state');
     if (saved) {
       try {
         const s = JSON.parse(saved);
         if (s && s.gameStarted) {
-          // Offer Resume as the primary action
           const resumeBtn = document.getElementById('resume-btn');
           const startBtn  = document.getElementById('start-btn');
           if (resumeBtn) resumeBtn.style.display = 'block';
@@ -285,22 +371,27 @@
     }
   });
 
-  // Resume the existing saved session.
-  // game.js window.onload has already restored state and the timer
-  // is ready to resume — just dismiss the overlay here.
   function resumeSavedGame() {
     document.getElementById('start-overlay').classList.add('hidden');
-    // game.js window.onload already called restoreUI() and set up resumeTimer()
-    // when it detected gameStarted=true, so nothing more to do here.
   }
 
   function startGame() {
-    // New game — clear any existing save first, then begin
     try { localStorage.removeItem('switchChallenge_state'); } catch(e) {}
     document.getElementById('start-overlay').classList.add('hidden');
     if (typeof initGame === 'function') initGame();
   }
 </script>
+
+<!-- ── Page Footer ── -->
+<footer id="page-footer">
+  <div class="footer-dev-label">Developed by</div>
+  <div class="footer-dev-name">Vanampally Om Prakash Reddy</div>
+  <div class="footer-dev-email">
+    <a href="mailto:vanampallyomprakashreddy@gmail.com">vanampallyomprakashreddy@gmail.com</a>
+  </div>
+  <div><span class="footer-divider"></span></div>
+  <div class="footer-product">Switch Challenge Trainer &mdash; Symbol Sequencing Assessment</div>
+</footer>
 
 </body>
 </html>
